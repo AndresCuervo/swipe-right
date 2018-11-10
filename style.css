@@ -1,0 +1,18 @@
+body {
+    font-family: sans-serif;
+}
+
+#code {
+    font-family: monospace;
+}
+
+#downloadButton {
+    font-size: 3em;
+    border-radius: 4px;
+    background-color: #2EAFAC;
+    border: 1px solid black;
+
+    position: fixed;
+    top: 1em;
+    right: 1em;
+}
