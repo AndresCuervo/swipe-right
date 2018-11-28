@@ -6,11 +6,15 @@ let downloadButton = document.createElement('a')
 const fontSize = '28'
 const lineHeight = fontSize * 1.2
 const marginOffset = { x: 25, y: 100 }
-const swipeRightTopMargin = 200;
+let   swipeRightTopMargin = 50;
 const swipeText = "⇢ swipe right ⇢"
 const swipeTextCount = swipeText.length
 const swipeRightFontSize = fontSize * 3
 const halfCenterText = swipeRightFontSize * swipeTextCount * 0.33
+const canvasDimensions = {
+    width: 1080,
+    height: 1080
+}
 
 function setup() {
     canvas = document.createElement('canvas')
@@ -18,12 +22,52 @@ function setup() {
 
     document.body.appendChild(canvas)
     canvas.style = "display: inline-block;"
-    canvas.width = '1080'
-    canvas.height = '1080'
+    canvas.width = canvasDimensions.width;
+    canvas.height = canvasDimensions.height;
 
     downloadButton.id = "downloadButton"
     downloadButton.innerText = "DOWNLOAD"
     ui.appendChild(downloadButton)
+
+    // Create slider, label, and event listener to update
+    const topMarginSlider = document.createElement('input');
+    topMarginSlider.type = "range";
+    topMarginSlider.name = "topMargin";
+    topMarginSlider.min = "0";
+    topMarginSlider.max = canvasDimensions.height;
+    topMarginSlider.step = "0.1";
+
+    const topMarginSliderLabel = document.createElement('label')
+    topMarginSliderLabel.for = 'topMargin'
+    topMarginSliderLabel.innerText = 'top margin'
+
+    ui.appendChild(topMarginSlider);
+    ui.appendChild(topMarginSliderLabel);
+
+    topMarginSlider.addEventListener('input', event => {
+        console.log(event.target.value)
+        swipeRightTopMargin = Number(event.target.value);
+    })
+
+    const scaleSlider = document.createElement('input');
+    scaleSlider.type = "range";
+    scaleSlider.name = "scale";
+    scaleSlider.min = 0;
+    scaleSlider.max = 1;
+    scaleSlider.step = "0.001";
+
+    const scaleSliderLabel = document.createElement('label')
+    scaleSliderLabel.for = 'canvas-scale'
+    scaleSliderLabel.innerText = 'canvas scale'
+
+    ui.appendChild(scaleSlider);
+    ui.appendChild(scaleSliderLabel);
+
+    scaleSlider.addEventListener('input', event => {
+        console.log(event.target.value)
+        const newScale = Number(event.target.value);
+        canvas.setAttribute('style', `transform: scale(${newScale}, ${newScale})`)
+    })
 }
 
 function processText() {
